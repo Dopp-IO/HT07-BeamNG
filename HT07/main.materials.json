@@ -1,0 +1,23 @@
+{
+  "ht07_basemat" : {
+    "name" : "ht07_basemat",
+    "mapTo" : "ht07_basemat",
+    "class" : "Material",
+    "Stages" : [
+      {
+        "baseColorFactor" : [ 0.5, 0.5, 0.5, 1.0 ],
+        "roughnessFactor": 0.4,
+        "useAnisotropic": true
+      },
+      {},
+      {},
+      {}
+    ],
+    "activeLayers": 1,
+    "dynamicCubemap": true,
+    "materialTag0": "beamng",
+    "materialTag1": "vehicle",
+    "order_simset": 0,
+    "version": 1.5
+  }  
+}

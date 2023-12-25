@@ -1,0 +1,203 @@
+{
+"ht07_default_wheels_f": {
+    "information":{
+        "authors":"Mikhail Allen",
+        "name":"HT07 Wheels",
+    },
+
+    "slotType": "ht07_wheels_f",
+
+    "slots":[
+        ["type", "default", "description"],
+    ],
+
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+
+        ["HT07_wheel_fl", ["wheel_FL", "tire_FL"]],
+        ["HT07_wheel_fr", ["wheel_FR", "tire_FR"]],
+    ],
+
+    "variables": [
+        ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+        ["$frictionCoef", "range", "Ratio", "Front Wheels Physical Parameters", 1.0, 0.0, 2.0, "Tire Friction Multiplier", "Scales the tire model static friction coefficient"],
+        ["$tirepressure_F", "range", "psi", "Front Wheels Physical Parameters", 6.0, 0.0, 20.0, "Front Tire Pressure", ""],
+
+        ["$hubFStrengthCoef", "range", "Ratio", "Front Wheels Physical Parameters", 1.0, 0.0, 2.0, "Hub Stiffness Multiplier", "Scales hub stiffness"],
+        ["$hubFDampingCoef", "range", "Ratio", "Front Wheels Physical Parameters", 1.0, 0.0, 2.0, "Hub Damping Multiplier", "Scales hub damping"],
+
+        ["$tireStrengthCoef", "range", "Ratio", "Front Wheels Physical Parameters", 1.0, 0.0, 2.0, "Tire Stiffness Multiplier", "Scales hub stiffness"],
+        ["$tireDampingCoef", "range", "Ratio", "Front Wheels Physical Parameters", 1.0, 0.0, 2.0, "Tire Damping Multiplier", "Scales hub damping"],
+    ],
+
+    // "nodes": [
+    //     ["id", "posX", "posY", "posZ"],
+    // ],
+
+    // "beams": [
+    //     ["id1:", "id2:"],
+    // ],
+
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+    
+        {"disableMeshBreaking":true,"disableHubMeshBreaking":true,"hasTire":true},
+
+        //general settings
+        {"hubRadius":0.139},
+        {"radius":0.203},
+        {"tireWidth":0.185},
+        {"wheelOffset":0},
+        {"hubWidth":0.19},
+        {"numRays":16},
+        //hub options
+        // oz fsae hubs weigh 1.66kg
+        // arbitrarily split 50/50 between hub center and orbiting nodes
+        {"hubTreadBeamSpring":"$=901000*$hubFStrengthCoef", "hubTreadBeamDamp":"$=6*$hubFDampingCoef"},
+        {"hubPeripheryBeamSpring":"$=901000*$hubFStrengthCoef", "hubPeripheryBeamDamp":"$=6*$hubFDampingCoef"},
+        {"hubSideBeamSpring":"$=1351000*$hubFStrengthCoef", "hubSideBeamDamp":"$=6*$hubFDampingCoef"},
+        {"hubNodeWeight":0.026},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.5},
+        //tire options
+        {"wheelSideBeamSpring":"$=$tirepressure_F*550","wheelSideBeamDamp":"$=20*$tireDampingCoef"},
+        {"wheelSideBeamSpringExpansion":"$=281000*$tireStrengthCoef","wheelSideBeamDampExpansion":"$=30*$tireDampingCoef"},
+        // {"wheelSideTransitionZone":0.09,"wheelSideBeamPrecompression":0.98},
+
+        {"wheelReinfBeamSpring":"$=15000*$tireStrengthCoef","wheelReinfBeamDamp":"$=140*$tireDampingCoef"},
+        // {"wheelReinfBeamDampCutoffHz":500,"wheelReinfBeamPrecompression":0.98},
+
+        {"wheelTreadBeamSpring":"$=50000*$tireStrengthCoef","wheelTreadBeamDamp":"$=50*$tireDampingCoef"},
+        // {"wheelTreadBeamDampCutoffHz":500,"wheelTreadBeamPrecompression":0.98},
+
+        {"wheelTreadReinfBeamSpring":"$=120000*$tireStrengthCoef","wheelTreadReinfBeamDamp":"$=40*$tireDampingCoef"},
+        // {"wheelTreadReinfBeamDampCutoffHz":500,"wheelTreadReinfBeamPrecompression":0.98},
+
+        {"wheelPeripheryBeamSpring":"$=35000*$tireStrengthCoef","wheelPeripheryBeamDamp":"$=23*$tireDampingCoef"},
+        // {"wheelPeripheryBeamDampCutoffHz":500,"wheelPeripheryBeamPrecompression":0.98},
+
+        {"wheelPeripheryReinfBeamSpring":"$=95000*$tireStrengthCoef","wheelPeripheryReinfBeamDamp":"$=23*$tireDampingCoef"},
+        // {"wheelPeripheryReinfBeamDampCutoffHz":500,"wheelPeripheryReinfBeamPrecompression":0.98},
+
+        //general tire values
+        //tires are 3.6kg
+        {"nodeWeight":0.11},
+        {"nodeMaterial":"|NM_RUBBER"},
+        {"triangleCollision":false},
+        {"pressurePSI":"$tirepressure_F"},
+        {"dragCoef":5},
+        //groundmodel friction multipliers
+        {"frictionCoef":"$frictionCoef"},
+        {"slidingFrictionCoef":1.0},
+        {"treadCoef":0.7},
+        //advanced friction values
+        {"noLoadCoef":1.28},
+        {"loadSensitivitySlope":0.00019},
+        {"fullLoadCoef":0.4},
+        {"softnessCoef":0.7},
+        //deform values
+        {"wheelSideBeamDeform":11000,"wheelSideBeamStrength":15000},
+        {"wheelTreadBeamDeform":10000,"wheelTreadBeamStrength":13000},
+        {"wheelPeripheryBeamDeform":40000,"wheelPeripheryBeamStrength":40000},
+
+        ["FL", "wheel_FL", "tire_FL", "fw1ll", "fw1l", 9999, "brake_fl", -1],
+        ["FR", "wheel_FR", "tire_FR", "fw1rr", "fw1r", 9999, "brake_fr", 1],
+    ],
+},
+"ht07_default_wheels_r": {
+    "information":{
+        "authors":"Mikhail Allen",
+        "name":"HT07 Wheels",
+    },
+
+    "slotType": "ht07_wheels_r",
+
+    "slots":[
+        ["type", "default", "description"],
+    ],
+
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+
+        ["HT07_wheel_rl", ["wheel_RL", "tire_RL"]],
+        ["HT07_wheel_rr", ["wheel_RR", "tire_RR"]],
+    ],
+
+    "variables": [
+        ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+        ["$frictionCoef", "range", "Ratio", "Rear Wheels Physical Parameters", 1.0, 0.0, 2.0, "Tire Friction Multiplier", "Scales the tire model static friction coefficient"],
+        ["$tirepressure_R", "range", "psi", "Rear Wheels Physical Parameters", 6.0, 0.0, 20.0, "Rear Tire Pressure", ""],
+    ],
+
+    // "nodes": [
+    //     ["id", "posX", "posY", "posZ"],
+    // ],
+
+    // "beams": [
+    //     ["id1:", "id2:"],
+    // ],
+
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+    
+        {"disableMeshBreaking":true,"disableHubMeshBreaking":true,"hasTire":true},
+
+        //general settings
+        {"hubRadius":0.139},
+        {"radius":0.203},
+        {"tireWidth":0.185},
+        {"wheelOffset":0},
+        {"hubWidth":0.19},
+        {"numRays":16},
+        //hub options
+        {"hubTreadBeamSpring":901000, "hubTreadBeamDamp":6},
+        {"hubPeripheryBeamSpring":901000, "hubPeripheryBeamDamp":6},
+        {"hubSideBeamSpring":1351000, "hubSideBeamDamp":6},
+        {"hubNodeWeight":0.40},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.5},
+        //tire options
+        {"wheelSideBeamSpring":"$=$tirepressure_R*550","wheelSideBeamDamp":20},
+        {"wheelSideBeamSpringExpansion":281000,"wheelSideBeamDampExpansion":30},
+        {"wheelSideTransitionZone":0.09,"wheelSideBeamPrecompression":0.98},
+
+        {"wheelReinfBeamSpring":15000,"wheelReinfBeamDamp":140},
+        {"wheelReinfBeamDampCutoffHz":500,"wheelReinfBeamPrecompression":0.98},
+
+        {"wheelTreadBeamSpring":50000,"wheelTreadBeamDamp":50},
+        {"wheelTreadBeamDampCutoffHz":500,"wheelTreadBeamPrecompression":0.98},
+
+        {"wheelTreadReinfBeamSpring":120000,"wheelTreadReinfBeamDamp":40},
+        {"wheelTreadReinfBeamDampCutoffHz":500,"wheelTreadReinfBeamPrecompression":0.98},
+
+        {"wheelPeripheryBeamSpring":35000,"wheelPeripheryBeamDamp":23},
+        {"wheelPeripheryBeamDampCutoffHz":500,"wheelPeripheryBeamPrecompression":0.98},
+
+        {"wheelPeripheryReinfBeamSpring":95000,"wheelPeripheryReinfBeamDamp":23},
+        {"wheelPeripheryReinfBeamDampCutoffHz":500,"wheelPeripheryReinfBeamPrecompression":0.98},
+
+        //general tire values
+        {"nodeWeight":0.11},
+        {"nodeMaterial":"|NM_RUBBER"},
+        {"triangleCollision":false},
+        {"pressurePSI":"$tirepressure_R"},
+        {"dragCoef":5},
+        //groundmodel friction multipliers
+        {"frictionCoef":"$frictionCoef"},
+        {"slidingFrictionCoef":1.0},
+        {"treadCoef":0.7},
+        //advanced friction values
+        {"noLoadCoef":1.28},
+        {"loadSensitivitySlope":0.00019},
+        {"fullLoadCoef":0.4},
+        {"softnessCoef":0.7},
+        //deform values
+        {"wheelSideBeamDeform":11000,"wheelSideBeamStrength":15000},
+        {"wheelTreadBeamDeform":10000,"wheelTreadBeamStrength":13000},
+        {"wheelPeripheryBeamDeform":40000,"wheelPeripheryBeamStrength":40000},
+
+        ["RL", "wheel_RL", "tire_RL", "rw1ll", "rw1l", 9999, "brake_rl", -1],
+        ["RR", "wheel_RR", "tire_RR", "rw1rr", "rw1r", 9999, "brake_rr", 1],
+    ],
+},
+}

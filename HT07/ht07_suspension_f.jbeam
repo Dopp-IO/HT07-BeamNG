@@ -1,0 +1,232 @@
+{
+"suspension_f": {
+    "information":{
+        "authors":"Mikhail Allen",
+        "name":"Front Suspension",
+    },
+
+    "slotType": "suspension_f",
+
+    "slots":[
+        ["type", "default", "description"],
+        ["ht07_wheeldata_F", "ht07_wheeldata_F", "Spindles"],
+        ["ht07_wheels_f", "ht07_default_wheels_f", "Front Wheels"],
+    ],
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+
+        ["HT07_aarm_fl_low", ["HT07_aarm_fl_low"]],
+        ["HT07_aarm_fl_hi", ["HT07_aarm_fl_hi"]],
+        ["HT07_aarm_fr_low", ["HT07_aarm_fr_low"]],
+        ["HT07_aarm_fr_hi", ["HT07_aarm_fr_hi"]],
+
+        ["HT07_pushrod_fl", ["HT07_pushrod_fl"]],
+        ["HT07_pushrod_fr", ["HT07_pushrod_fr"]],
+
+        ["HT07_steering_rod_l", ["HT07_steering_rod_l"]],
+        ["HT07_steering_rod_r", ["HT07_steering_rod_r"]],
+
+        ["HT07_upright_fl", ["HT07_upright_fl"]],
+        ["HT07_upright_fr", ["HT07_upright_fr"]],
+        ["HT07_amk_fl", ["HT07_upright_fl"]],
+        ["HT07_amk_fr", ["HT07_upright_fr"]],
+
+        ["HT07_rocker_fl", ["HT07_rocker_fl"]],
+        ["HT07_rocker_fr", ["HT07_rocker_fr"]],
+
+        ["HT07_ohlin_fl", ["HT07_ohlin_fl"]],
+        ["HT07_ohlin_fr", ["HT07_ohlin_fr"]],
+    ],
+
+    "variables": [
+        ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+        ["$suspensionPhyStiffnessF", "range", "N/m", "Front Suspension Physical Parameters", 440000, 100000, 5000000, "Beam Stiffness", "Stiffness of all beams in the front suspension"],
+        ["$suspensionPhyDampingF", "range", "N/m/s", "Front Suspension Physical Parameters", 100, 10, 200, "Beam Damping", "Damping of all beams in the front suspension"],
+        ["$aarmPhyStiffnessF", "range", "N/m", "Front Suspension Physical Parameters", 440000, 100000, 5000000, "A-Arm Beam Stiffness", "Stiffness of A-arm beams in the front suspension"],
+        ["$aarmPhyDampingF", "range", "N/m/s", "Front Suspension Physical Parameters", 100, 10, 200, "A-Arm Beam Damping", "Damping of A-arm beams in the front suspension"],
+        ["$amkMassF", "range", "kg", "Front Suspension Physical Parameters", 2.0, 0.1, 5, "AMK Node Mass", ""],
+        ["$suspensionFrontDamping", "range", "N/m/s", "Front Suspension Tuning Parameters", 300, 0.1, 1000, "Suspension Damping", ""],
+        ["$suspensionFrontSpringRate", "range", "N/m", "Front Suspension Tuning Parameters", 20000, 1, 50000, "Suspension Spring Rate", ""],
+        ["$suspensionFrontPrecompression", "range", "Ratio", "Front Suspension Tuning Parameters", 1.05, 1, 2, "Suspension Pre Compression", ""],
+        ["$steeringPhyStiffness", "range", "N/m", "Frame Physical Parameters", 600000, 100000, 2000000, "Steering Beam Stiffness", "Stiffness of steering control arms"],
+        ["$steeringPhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 10, 200, "Steering Beam Damping", "Damping of steering control arms"],
+        ["$steeringRailPhyStiffness", "range", "N/m", "Frame Physical Parameters", 600000, 100000, 2000000, "Steering Rail Stiffness", "Stiffness of pinion attachment"],
+        ["$hubFPhyStiffness", "range", "N/m", "Front Suspension Physical Parameters", 440000, 100000, 5000000, "Hub Stiffness", "Stiffness of front hubs"],
+        ["$hubFPhyDamping", "range", "N/m/s", "Front Suspension Physical Parameters", 25, 1, 200, "Hub Damping", "Damping of front hubs"],
+    ],
+
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        
+        {"nodeWeight":0.4},
+        {"group":["wheelhub_FL", "HT07_upright_fl"]},
+        ["fw1ll",                0.6471, -0.0005,  0.2002],
+        ["fw1l",                 0.5048, -0.0005,  0.2002],
+        
+        {"group":["wheelhub_FR", "HT07_upright_fr"]},
+        ["fw1rr",               -0.6471, -0.0005,  0.2002],
+        ["fw1r",                -0.5048, -0.0005,  0.2002],
+        
+        {"nodeWeight":0.3}, // 16 suspension nodes. Spread mass accordingly
+
+        {"group": ["HT07_aarm_fl_hi", "HT07_upright_fl", "HT07_pushrod_fl"]},
+        ["aarm_fl_hi",           0.517,   0.009,   0.288],
+        {"group": ["HT07_aarm_fl_low", "HT07_upright_fl"]},
+        ["aarm_fl_lo",           0.526,  -0.004,   0.1],
+        {"group": ["HT07_aarm_fr_hi", "HT07_upright_fr", "HT07_pushrod_fr"]},
+        ["aarm_fr_hi",          -0.517,   0.009,   0.288],
+        {"group": ["HT07_aarm_fr_low", "HT07_upright_fr"]},
+        ["aarm_fr_lo",          -0.526,  -0.004,   0.1],
+
+        {"group": ["HT07_ohlin_fl", "HT07_rocker_fl"]},
+        ["rocker_springtop_fl",  0.1064,  0.1799,  0.5575],
+        {"group": ["HT07_rocker_fl", "HT07_pushrod_fl"]},
+        ["rocker_pushrod_fl",    0.1782,  0.2192,  0.5151],
+
+        {"group": ["HT07_ohlin_fr", "HT07_rocker_fr"]},
+        ["rocker_springtop_fr", -0.1064,  0.1799,  0.5575],
+        {"group": ["HT07_rocker_fr", "HT07_pushrod_fr"]},
+        ["rocker_pushrod_fr",   -0.1782,  0.2192,  0.5151],
+
+        {"group": ["HT07_upright_fl"]},
+        {"nodeWeight":"$=$amkMassF"},
+        ["amk_fr",              -0.4133, -0.0005,  0.2002],
+        {"nodeWeight":0.3},
+        ["brake_fr",            -0.5048,  0.077,   0.1865],
+        {"group": ["HT07_upright_fl", "HT07_steering_rod_l"]},
+        ["hub_steer_joint_fl",   0.5263, -0.0749,  0.1249],
+        
+        {"group": ["HT07_upright_fr"]},
+        {"nodeWeight":"$=$amkMassF"},
+        ["amk_fl",               0.4133, -0.0005,  0.2002],
+        {"nodeWeight":0.3},
+        ["brake_fl",             0.5048,  0.077,   0.1865],
+        {"group": ["HT07_upright_fr", "HT07_steering_rod_r"]},
+        ["hub_steer_joint_fr",  -0.5263, -0.0749,  0.1249],
+
+        {"group": ["HT07_steering_rod_l", "HT07_steering_rod_r"]},
+        ["pinion",               0.0,    -0.1099,  0.1149],
+        {"group": ""},
+    ],
+
+    "beams": [
+        ["id1:", "id2:"],
+
+        {"beamSpring": "$suspensionFrontSpringRate", "beamDamp": "$suspensionFrontDamping"},
+        {"beamPrecompression": "$suspensionFrontPrecompression"},
+
+        ["cone_fl", "rocker_springtop_fl", {"beamLongBound": 1.05, "beamLimitSpring": "$=$suspensionFrontSpringRate*3"}],
+        ["cone_fr", "rocker_springtop_fr", {"beamLongBound": 1.05, "beamLimitSpring": "$=$suspensionFrontSpringRate*3"}],
+        
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"beamSpring":"$hubFPhyStiffness","beamDamp":"$hubFPhyDamping"},
+        {"beamPrecompression": 1.0},
+        ["fw1rr",                "fw1r"],
+        ["fw1ll",                "fw1l"],
+
+        {"beamSpring": "$aarmPhyStiffnessF", "beamDamp": "$aarmPhyDampingF"},
+        // front left upper a-arm
+        ["mount_fl_ru",          "aarm_fl_hi"],
+        ["mount_fl_fu",          "aarm_fl_hi"],
+        // front right upper a-arm
+        ["mount_fr_ru",          "aarm_fr_hi"],
+        ["mount_fr_fu",          "aarm_fr_hi"],
+        // front left lower a-arm
+        ["mount_fl_rd",          "aarm_fl_lo"],
+        ["mount_fl_fd",          "aarm_fl_lo"],
+        // front right lower a-arm
+        ["mount_fr_rd",          "aarm_fr_lo"],
+        ["mount_fr_fd",          "aarm_fr_lo"],
+        
+        {"beamSpring": "$suspensionPhyStiffnessF", "beamDamp": "$suspensionPhyDampingF"},
+        
+        ["sus_fl_hinge_u", "rocker_springtop_fl"],
+        ["sus_fl_hinge_d", "rocker_springtop_fl"],
+        ["rocker_springtop_fl",   "rocker_pushrod_fl"],
+        ["sus_fr_hinge_u", "rocker_springtop_fr"],
+        ["sus_fr_hinge_d", "rocker_springtop_fr"],
+        ["rocker_springtop_fr",   "rocker_pushrod_fr"],
+
+        ["aarm_fr_hi",               "fw1rr"],
+        ["aarm_fr_lo",               "fw1rr"],
+        ["aarm_fr_lo",                "fw1r"],
+        ["aarm_fr_hi",                "fw1r"],
+        ["fw1r",  "hub_steer_joint_fr"],
+        ["fw1rr",  "hub_steer_joint_fr"],
+        ["fw1l",              "amk_fl"],
+        ["aarm_fl_hi",                "fw1l"],
+        ["aarm_fl_lo",                "fw1l"],
+        ["aarm_fl_lo",               "fw1ll"],
+        ["aarm_fl_hi",               "fw1ll"],
+        ["hub_steer_joint_fl",                "fw1l"],
+        ["fw1r",              "amk_fr"],
+        ["fw1l",            "brake_fl"],
+        ["fw1ll",            "brake_fl"],
+        ["fw1r",            "brake_fr"],
+        ["fw1rr",            "brake_fr"],
+
+        ["sus_fl_hinge_u",   "rocker_pushrod_fl"],
+        ["sus_fl_hinge_d",   "rocker_pushrod_fl"],
+        ["sus_fr_hinge_u",   "rocker_pushrod_fr"],
+        ["sus_fr_hinge_d",   "rocker_pushrod_fr"],
+        ["rocker_pushrod_fl",          "aarm_fl_hi"],
+        
+        ["rocker_pushrod_fr",          "aarm_fr_hi"],
+        ["aarm_fr_lo",  "hub_steer_joint_fr"],
+        ["aarm_fr_hi",  "hub_steer_joint_fr"],
+        ["aarm_fl_hi",  "hub_steer_joint_fl"],
+        ["aarm_fl_lo",  "hub_steer_joint_fl"],
+        ["aarm_fl_hi",              "amk_fl"],
+        ["aarm_fl_lo",              "amk_fl"],
+        ["hub_steer_joint_fl",              "amk_fl"],
+        ["aarm_fr_hi",              "amk_fr"],
+        ["hub_steer_joint_fr",              "amk_fr"],
+        ["aarm_fr_lo",              "amk_fr"],
+        ["hub_steer_joint_fl",              "pinion"],
+        ["hub_steer_joint_fr",              "pinion"],
+        ["aarm_fl_hi",            "brake_fl"],
+        ["amk_fl",            "brake_fl"],
+        ["aarm_fl_lo",            "brake_fl"],
+        ["amk_fr",            "brake_fr"],
+        ["aarm_fr_lo",            "brake_fr"],
+        ["aarm_fr_hi",            "brake_fr"],
+        ["hub_steer_joint_fl", "fw1ll"],
+    ],
+
+    "rails": {
+        "rack":{"links:":["mount_fl_fd", "mount_fr_fd"], "looped":false, "capped":true}
+    },
+
+    "slidenodes": [
+        ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+        ["pinion", "rack", true, true, 0, "$steeringRailPhyStiffness", 100000000, "$suspensionPhyStiffnessF"],
+    ],
+
+    "hydros": [
+        ["id1:","id2:"],
+        {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+        {"beamSpring":"$steeringPhyStiffness","beamDamp":"$steeringPhyDamping","beamDeform":"FLT_MAX"},
+        ["mount_fl_fd","pinion", {"factor": 0.2,"steeringWheelLock":90,"inRate":3,"outRate":3}],
+        ["mount_fr_fd","pinion", {"factor":-0.2,"steeringWheelLock":90,"inRate":3,"outRate":3}],
+        {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+    ],
+},
+"ht07_wheeldata_F": {
+    "information":{
+        "authors":"Mikhail Allen",
+        "name":"Front Spindles",
+    },
+    "slotType" : "ht07_wheeldata_F",
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        
+        // ["FL", "wheel_FL", "tire_FL", "fw1ll", "fw1l", 9999, "brake_fl", -1],
+        // ["FR", "wheel_FR", "tire_FR", "fw1rr", "fw1r", 9999, "brake_fr", 1],
+    ],
+    "powertrain" : [
+        ["type", "name", "inputName", "inputIndex"],
+        ["shaft", "spindleFL", "motorFL", 1, {"connectedWheel":"FL", "uiName":"Front Left Axle", "friction":1.16, "dynamicFriction":0.00362, "gearRatio":11.86}],
+        ["shaft", "spindleFR", "motorFR", 1, {"connectedWheel":"FR", "uiName":"Front Right Axle", "friction":1.16, "dynamicFriction":0.00362, "gearRatio":11.86}],
+    ],
+},
+}

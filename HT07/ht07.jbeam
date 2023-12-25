@@ -1,0 +1,25 @@
+{
+"ht07":{
+    "information":{
+        "authors":"Mikhail Allen",
+        "name":"HyTech Racing HT07",
+    },
+    "slotType" : "main",
+    "slots": [
+        ["type", "default", "description"],
+        //bodywork
+        ["spaceframe","spaceframe", "Space Frame", {"coreSlot":true}],
+    ],
+    "controller": [
+        ["fileName"],
+        ["vehicleController", {}],
+    ],
+
+    // "scaledragCoef":1.00,
+    //"scalenodeWeight":0.9,
+    //"scalebeamSpring":0.9,
+    //"scalebeamDamp":0.9,
+    //"scalebeamDeform":0.8,
+    //"scalebeamStrength":0.8,
+},
+}

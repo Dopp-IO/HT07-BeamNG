@@ -1,0 +1,10 @@
+{
+    "Author":"Mikhail Allen",
+    "Brand":"HyTech Racing",
+    "Name":"HT07",
+    "Type":"Car",
+    "Years":{
+      "max":2023,
+      "min":2022
+    }
+  }

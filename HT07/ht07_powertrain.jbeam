@@ -1,0 +1,103 @@
+{
+    "default_powertrain_controller":{
+        "information":{
+            "authors":"Mikhail Allen",
+            "name":"Quad Motor Controller",
+        },
+        "slotType" : "powertrain_controller",
+        // "slots": [
+        //     ["type", "default", "description"],
+        // ],
+
+        "vehicleController": {
+            "shiftLogicName":"electricMotor",
+            "motorNames": ["motorFL", "motorFR", "motorRL", "motorRR"],
+            "topSpeedLimitReverse": 15,
+            "defaultRegen": 0.0,
+            "brakeRegenCoef": 1,
+        },
+
+        "powertrain": [
+            ["type", "name", "inputName", "inputIndex"],
+            ["electricMotor", "motorFL", "dummy", 0],
+            ["electricMotor", "motorFR", "dummy", 0],
+            ["electricMotor", "motorRL", "dummy", 0],
+            ["electricMotor", "motorRR", "dummy", 0],
+        ],
+
+        "energyStorage": [
+            ["type", "name"],
+            ["electricBattery", "mainBattery"],
+        ],
+
+        "mainBattery": {
+            "energyType":"electricEnergy",
+            "batteryCapacity": 6.2,
+            "startingCapacity": 100,
+        },
+        "motorFL": {
+            "torque":[
+                ["rpm", "torque"],
+                [0, 20],
+                [14300, 20],
+                [20000, 14],
+            ],
+            "maxRPM":20000,
+            "inertia":0.01,
+            "friction":2,
+            "dynamicFriction":0.00025,
+            "electricalEfficiency":0.90,
+            "energyStorage": "mainBattery",
+            "electricsThrottleFactorName": "throttleFactorFront",
+            "maximumWantedRegenTorque": 0,
+        },
+        "motorFR": {
+            "torque":[
+                ["rpm", "torque"],
+                [0, 20],
+                [14300, 20],
+                [20000, 14],
+            ],
+            "maxRPM":20000,
+            "inertia":0.01,
+            "friction":2,
+            "dynamicFriction":0.00025,
+            "electricalEfficiency":0.90,
+            "energyStorage": "mainBattery",
+            "electricsThrottleFactorName": "throttleFactorFront",
+            "maximumWantedRegenTorque": 0,
+        },
+        "motorRL": {
+            "torque":[
+                ["rpm", "torque"],
+                [0, 20],
+                [14300, 20],
+                [20000, 14],
+            ],
+            "maxRPM":20000,
+            "inertia":0.01,
+            "friction":2,
+            "dynamicFriction":0.00025,
+            "electricalEfficiency":0.90,
+            "energyStorage": "mainBattery",
+            "electricsThrottleFactorName": "throttleFactorRear",
+            "maximumWantedRegenTorque": 0,
+        },
+        "motorRR": {
+            "torque":[
+                ["rpm", "torque"],
+                [0, 20],
+                [14300, 20],
+                [20000, 14],
+            ],
+            "maxRPM":20000,
+            "inertia":0.01,
+            "friction":2,
+            "dynamicFriction":0.00025,
+            "electricalEfficiency":0.90,
+            "energyStorage": "mainBattery",
+            "electricsThrottleFactorName": "throttleFactorRear",
+            "maximumWantedRegenTorque": 0,
+        },
+    },
+    }
