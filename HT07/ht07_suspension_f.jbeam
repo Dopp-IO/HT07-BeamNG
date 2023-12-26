@@ -10,7 +10,7 @@
     "slots":[
         ["type", "default", "description"],
         ["ht07_wheeldata_F", "ht07_wheeldata_F", "Spindles"],
-        ["ht07_wheels_f", "ht07_default_wheels_f", "Front Wheels"],
+        ["ht07_wheels_f", "ht07_default_wheels_f", "Front Wheels", {"nodeOffset":{"x":0, "y":0, "z":0.2}}],
     ],
     "flexbodies":[
         ["mesh", "[group]:", "nonFlexMaterials"],
@@ -51,21 +51,10 @@
         ["$steeringPhyStiffness", "range", "N/m", "Frame Physical Parameters", 600000, 100000, 2000000, "Steering Beam Stiffness", "Stiffness of steering control arms"],
         ["$steeringPhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 10, 200, "Steering Beam Damping", "Damping of steering control arms"],
         ["$steeringRailPhyStiffness", "range", "N/m", "Frame Physical Parameters", 600000, 100000, 2000000, "Steering Rail Stiffness", "Stiffness of pinion attachment"],
-        ["$hubFPhyStiffness", "range", "N/m", "Front Suspension Physical Parameters", 440000, 100000, 5000000, "Hub Stiffness", "Stiffness of front hubs"],
-        ["$hubFPhyDamping", "range", "N/m/s", "Front Suspension Physical Parameters", 25, 1, 200, "Hub Damping", "Damping of front hubs"],
     ],
 
     "nodes": [
         ["id", "posX", "posY", "posZ"],
-        
-        {"nodeWeight":0.4},
-        {"group":["wheelhub_FL", "HT07_upright_fl"]},
-        ["fw1ll",                0.6471, -0.0005,  0.2002],
-        ["fw1l",                 0.5048, -0.0005,  0.2002],
-        
-        {"group":["wheelhub_FR", "HT07_upright_fr"]},
-        ["fw1rr",               -0.6471, -0.0005,  0.2002],
-        ["fw1r",                -0.5048, -0.0005,  0.2002],
         
         {"nodeWeight":0.3}, // 16 suspension nodes. Spread mass accordingly
 
@@ -117,12 +106,6 @@
 
         ["cone_fl", "rocker_springtop_fl", {"beamLongBound": 1.05, "beamLimitSpring": "$=$suspensionFrontSpringRate*3"}],
         ["cone_fr", "rocker_springtop_fr", {"beamLongBound": 1.05, "beamLimitSpring": "$=$suspensionFrontSpringRate*3"}],
-        
-        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
-        {"beamSpring":"$hubFPhyStiffness","beamDamp":"$hubFPhyDamping"},
-        {"beamPrecompression": 1.0},
-        ["fw1rr",                "fw1r"],
-        ["fw1ll",                "fw1l"],
 
         {"beamSpring": "$aarmPhyStiffnessF", "beamDamp": "$aarmPhyDampingF"},
         // front left upper a-arm
@@ -139,6 +122,9 @@
         ["mount_fr_fd",          "aarm_fr_lo"],
         
         {"beamSpring": "$suspensionPhyStiffnessF", "beamDamp": "$suspensionPhyDampingF"},
+
+        ["aarm_fl_hi", "aarm_fl_lo"],
+        ["aarm_fr_hi", "aarm_fr_lo"],
         
         ["sus_fl_hinge_u", "rocker_springtop_fl"],
         ["sus_fl_hinge_d", "rocker_springtop_fl"],
@@ -146,24 +132,6 @@
         ["sus_fr_hinge_u", "rocker_springtop_fr"],
         ["sus_fr_hinge_d", "rocker_springtop_fr"],
         ["rocker_springtop_fr",   "rocker_pushrod_fr"],
-
-        ["aarm_fr_hi",               "fw1rr"],
-        ["aarm_fr_lo",               "fw1rr"],
-        ["aarm_fr_lo",                "fw1r"],
-        ["aarm_fr_hi",                "fw1r"],
-        ["fw1r",  "hub_steer_joint_fr"],
-        ["fw1rr",  "hub_steer_joint_fr"],
-        ["fw1l",              "amk_fl"],
-        ["aarm_fl_hi",                "fw1l"],
-        ["aarm_fl_lo",                "fw1l"],
-        ["aarm_fl_lo",               "fw1ll"],
-        ["aarm_fl_hi",               "fw1ll"],
-        ["hub_steer_joint_fl",                "fw1l"],
-        ["fw1r",              "amk_fr"],
-        ["fw1l",            "brake_fl"],
-        ["fw1ll",            "brake_fl"],
-        ["fw1r",            "brake_fr"],
-        ["fw1rr",            "brake_fr"],
 
         ["sus_fl_hinge_u",   "rocker_pushrod_fl"],
         ["sus_fl_hinge_d",   "rocker_pushrod_fl"],
@@ -190,7 +158,6 @@
         ["amk_fr",            "brake_fr"],
         ["aarm_fr_lo",            "brake_fr"],
         ["aarm_fr_hi",            "brake_fr"],
-        ["hub_steer_joint_fl", "fw1ll"],
     ],
 
     "rails": {
