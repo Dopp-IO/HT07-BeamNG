@@ -9,8 +9,8 @@
     
         "slots":[
             ["type", "default", "description"],
+            ["ht07_wheels_r", "ht07_default_wheels_r", "Rear Wheels", {"nodeOffset":{"x":0, "y":1.535, "z":0.2}}],
             ["ht07_wheeldata_R", "ht07_wheeldata_R", "Spindles"],
-            ["ht07_wheels_r", "ht07_default_wheels_r", "Rear Wheels"],
         ],
         "flexbodies":[
             ["mesh", "[group]:", "nonFlexMaterials"],
@@ -52,15 +52,6 @@
     
         "nodes": [
             ["id", "posX", "posY", "posZ"],
-            
-            {"nodeWeight":0.4},
-            {"group":["wheelhub_RL", "HT07_upright_rl"]},
-            ["rw1ll",                0.6471,  1.535,   0.2],
-            ["rw1l",                 0.5048,  1.535,   0.2002],
-            
-            {"group":["wheelhub_RR", "HT07_upright_rr"]},
-            ["rw1rr",               -0.6471,  1.535,   0.2],
-            ["rw1r",                -0.5048,  1.535,   0.2002],
             
             {"nodeWeight":0.3}, // 16 suspension nodes. Spread mass accordingly
     
@@ -110,12 +101,6 @@
     
             ["back_dmid", "rocker_springtop_rl", {"beamLongBound": 1.1, "beamLimitSpring": "$=$suspensionRearSpringRate*3"}],
             ["back_dmid", "rocker_springtop_rr", {"beamLongBound": 1.1, "beamLimitSpring": "$=$suspensionRearSpringRate*3"}],
-            
-            {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
-            {"beamSpring":1501000,"beamDamp":25},
-            {"beamPrecompression": 1.0},
-            ["rw1rr",                "rw1r"],
-            ["rw1ll",                "rw1l"],
 
             {"beamSpring": "$aarmPhyStiffnessR", "beamDamp": "$aarmPhyDampingR"},
             
@@ -137,52 +122,34 @@
 
             {"beamSpring": "$suspensionPhyStiffnessR", "beamDamp": "$suspensionPhyDampingR"},
 
+            ["aarm_rr_lo",         "carm_rr_out"],
             ["sus_rl_hinge_f",          "pushrod_rl"],
             ["pushrod_rl",      "sus_rl_hinge_r"],
             ["sus_rl_hinge_f", "rocker_springtop_rl"],
             ["rocker_springtop_rl",      "sus_rl_hinge_r"],
             ["rocker_springtop_rl",          "pushrod_rl"],
             ["aarm_rl_lo",          "pushrod_rl"],
-            ["rw1l",              "amk_rl"],
-            ["aarm_rl_lo",                "rw1l"],
             ["aarm_rl_lo",         "carm_rl_out"],
-            ["carm_rl_out",                "rw1l"],
-            ["aarm_rl_hi",                "rw1l"],
             ["aarm_rl_hi",          "aarm_rl_lo"],
             ["aarm_rl_hi",         "carm_rl_out"],
             ["aarm_rl_hi",              "amk_rl"],
             ["aarm_rl_lo",              "amk_rl"],
             ["carm_rl_out",              "amk_rl"],
-            ["aarm_rl_hi",               "rw1ll"],
-            ["carm_rl_out",               "rw1ll"],
-            ["aarm_rl_lo",               "rw1ll"],
             ["sus_rr_hinge_f",          "pushrod_rr"],
             ["pushrod_rr",      "sus_rr_hinge_r"],
             ["sus_rr_hinge_f", "rocker_springtop_rr"],
             ["rocker_springtop_rr",      "sus_rr_hinge_r"],
             ["rocker_springtop_rr",          "pushrod_rr"],
             ["aarm_rr_lo",          "pushrod_rr"],
-            ["rw1r",              "amk_rr"],
-            ["aarm_rr_lo",                "rw1r"],
-            ["aarm_rr_lo",         "carm_rr_out"],
-            ["carm_rr_out",                "rw1r"],
-            ["aarm_rr_hi",                "rw1r"],
             ["aarm_rr_hi",          "aarm_rr_lo"],
             ["aarm_rr_hi",         "carm_rr_out"],
             ["aarm_rr_hi",              "amk_rr"],
             ["aarm_rr_lo",              "amk_rr"],
             ["carm_rr_out",              "amk_rr"],
-            ["aarm_rr_hi",               "rw1rr"],
-            ["carm_rr_out",               "rw1rr"],
-            ["aarm_rr_lo",               "rw1rr"],
-            ["rw1l",            "brake_rl"],
             ["amk_rl",            "brake_rl"],
-            ["rw1ll",            "brake_rl"],
             ["aarm_rl_lo",            "brake_rl"],
             ["aarm_rl_hi",            "brake_rl"],
-            ["rw1r",            "brake_rr"],
             ["amk_rr",            "brake_rr"],
-            ["rw1rr",            "brake_rr"],
             ["aarm_rr_lo",            "brake_rr"],
             ["aarm_rr_hi",            "brake_rr"],
         ],
@@ -193,9 +160,31 @@
             "name":"Rear Spindles",
         },
         "slotType" : "ht07_wheeldata_R",
-        // "pressureWheels": [
-        //     ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
-        // ],
+        "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+
+            {"brakeTorque": 100},
+            {"selfCollision":false},
+            {"collision":true},
+
+            ["RL", "wheel_RL", "tire_RL", "rw1ll", "rw1l", 9999, "brake_rl", -1],
+            ["RR", "wheel_RR", "tire_RR", "rw1rr", "rw1r", 9999, "brake_rr", 1],
+
+            {"selfCollision":true},
+            {"axleBeams":[]},{"disableMeshBreaking":false,"disableTriangleBreaking":false},
+            {"enableTireLbeams":false},
+            {"enableTreadReinfBeams":false},
+            {"enableTireReinfBeams":false},
+            {"enableTreadReinfBeams":false},
+            {"enableTirePeripheryReinfBeams":false},
+            {"loadSensitivitySlope":""},
+            {"noLoadCoef":""},
+            {"fullLoadCoef":""},
+            {"frictionCoef":""},
+            {"slidingFrictionCoef":""},
+            {"softnessCoef":0.5},
+            {"treadCoef":1.0},
+        ],
         "powertrain" : [
             ["type", "name", "inputName", "inputIndex"],
             ["shaft", "spindleRL", "motorRL", 1, {"connectedWheel":"RL", "uiName":"Rear Left Axle", "friction":1.16, "dynamicFriction":0.00362, "gearRatio":11.86}],

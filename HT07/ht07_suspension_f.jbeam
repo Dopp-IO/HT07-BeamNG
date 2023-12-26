@@ -9,8 +9,8 @@
 
     "slots":[
         ["type", "default", "description"],
-        ["ht07_wheeldata_F", "ht07_wheeldata_F", "Spindles"],
         ["ht07_wheels_f", "ht07_default_wheels_f", "Front Wheels", {"nodeOffset":{"x":0, "y":0, "z":0.2}}],
+        ["ht07_wheeldata_F", "ht07_wheeldata_F", "Spindles", {"coreSlot":true}],
     ],
     "flexbodies":[
         ["mesh", "[group]:", "nonFlexMaterials"],
@@ -186,9 +186,28 @@
     "slotType" : "ht07_wheeldata_F",
     "pressureWheels": [
         ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
-        
-        // ["FL", "wheel_FL", "tire_FL", "fw1ll", "fw1l", 9999, "brake_fl", -1],
-        // ["FR", "wheel_FR", "tire_FR", "fw1rr", "fw1r", 9999, "brake_fr", 1],
+
+        {"brakeTorque": 100},
+        {"selfCollision":false},
+        {"collision":true},
+
+        ["FL", "wheel_FL", "tire_FL", "fw1ll", "fw1l", 9999, "brake_fl", -1],
+        ["FR", "wheel_FR", "tire_FR", "fw1rr", "fw1r", 9999, "brake_fr", 1],
+
+        {"selfCollision":true},
+        {"axleBeams":[]},{"disableMeshBreaking":false,"disableTriangleBreaking":false},
+        {"enableTireLbeams":false},
+        {"enableTreadReinfBeams":false},
+        {"enableTireReinfBeams":false},
+        {"enableTreadReinfBeams":false},
+        {"enableTirePeripheryReinfBeams":false},
+        {"loadSensitivitySlope":""},
+        {"noLoadCoef":""},
+        {"fullLoadCoef":""},
+        {"frictionCoef":""},
+        {"slidingFrictionCoef":""},
+        {"softnessCoef":0.5},
+        {"treadCoef":1.0},
     ],
     "powertrain" : [
         ["type", "name", "inputName", "inputIndex"],
