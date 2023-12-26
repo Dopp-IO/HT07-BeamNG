@@ -36,22 +36,22 @@
     "variables": [
         ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
         ["$framePhyStiffness", "range", "N/m", "Frame Physical Parameters", 2500000, 100000, 5000000, "Frame Beam Stiffness", "Stiffness of all beams in the space frame"],
-        ["$framePhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 10, 200, "Frame Beam Damping", "Damping of all beams in the space frame"],
+        ["$framePhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 1, 50, "Frame Beam Damping", "Damping of all beams in the space frame"],
         
         ["$frontMountsPhyStiffness", "range", "N/m", "Frame Physical Parameters", 2500000, 100000, 5000000, "Front Mounts Beam Stiffness", "Stiffness of all beams in the front mounts"],
-        ["$frontMountsPhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 10, 200, "Front Mounts Beam Damping", "Damping of all beams in the front mounts"],
+        ["$frontMountsPhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 1, 50, "Front Mounts Beam Damping", "Damping of all beams in the front mounts"],
 
         ["$rearMountsPhyStiffness", "range", "N/m", "Frame Physical Parameters", 2500000, 100000, 5000000, "Rear Mounts Beam Stiffness", "Stiffness of all beams in the rear mounts"],
-        ["$rearMountsPhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 10, 200, "Rear Mounts Beam Damping", "Damping of all beams in the rear mounts"],
+        ["$rearMountsPhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 1, 50, "Rear Mounts Beam Damping", "Damping of all beams in the rear mounts"],
 
         ["$frontHingePhyStiffness", "range", "N/m", "Frame Physical Parameters", 2500000, 100000, 5000000, "Front Hinge Beam Stiffness", "Stiffness of all beams in the front hinges"],
-        ["$frontHingePhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 10, 200, "Front Hinge Mounts Beam Damping", "Damping of all beams in the front hinges"],
+        ["$frontHingePhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 1, 50, "Front Hinge Mounts Beam Damping", "Damping of all beams in the front hinges"],
 
         ["$rearHingePhyStiffness", "range", "N/m", "Frame Physical Parameters", 2500000, 100000, 5000000, "Rear Hinge Beam Stiffness", "Stiffness of all beams in the rear hinges"],
-        ["$rearHingePhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 10, 200, "Rear Hinge Mounts Beam Damping", "Damping of all beams in the rear hinges"],
+        ["$rearHingePhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 1, 50, "Rear Hinge Mounts Beam Damping", "Damping of all beams in the rear hinges"],
 
         ["$hvMountsPhyStiffness", "range", "N/m", "Frame Physical Parameters", 2500000, 100000, 5000000, "HV Mounts Beam Stiffness", "Stiffness of all beams in the HV mounts"],
-        ["$hvMountsPhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 10, 200, "HV Mounts Beam Damping", "Damping of all beams in the HV mounts"],
+        ["$hvMountsPhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 1, 50, "HV Mounts Beam Damping", "Damping of all beams in the HV mounts"],
     ],
 
     "nodes": [

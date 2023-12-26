@@ -41,15 +41,15 @@
     "variables": [
         ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
         ["$suspensionPhyStiffnessF", "range", "N/m", "Front Suspension Physical Parameters", 440000, 100000, 5000000, "Beam Stiffness", "Stiffness of all beams in the front suspension"],
-        ["$suspensionPhyDampingF", "range", "N/m/s", "Front Suspension Physical Parameters", 100, 10, 200, "Beam Damping", "Damping of all beams in the front suspension"],
+        ["$suspensionPhyDampingF", "range", "N/m/s", "Front Suspension Physical Parameters", 100, 1, 50, "Beam Damping", "Damping of all beams in the front suspension"],
         ["$aarmPhyStiffnessF", "range", "N/m", "Front Suspension Physical Parameters", 440000, 100000, 5000000, "A-Arm Beam Stiffness", "Stiffness of A-arm beams in the front suspension"],
-        ["$aarmPhyDampingF", "range", "N/m/s", "Front Suspension Physical Parameters", 100, 10, 200, "A-Arm Beam Damping", "Damping of A-arm beams in the front suspension"],
+        ["$aarmPhyDampingF", "range", "N/m/s", "Front Suspension Physical Parameters", 100, 1, 50, "A-Arm Beam Damping", "Damping of A-arm beams in the front suspension"],
         ["$amkMassF", "range", "kg", "Front Suspension Physical Parameters", 2.0, 0.1, 5, "AMK Node Mass", ""],
         ["$suspensionFrontDamping", "range", "N/m/s", "Front Suspension Tuning Parameters", 300, 0.1, 1000, "Suspension Damping", ""],
         ["$suspensionFrontSpringRate", "range", "N/m", "Front Suspension Tuning Parameters", 20000, 1, 50000, "Suspension Spring Rate", ""],
         ["$suspensionFrontPrecompression", "range", "Ratio", "Front Suspension Tuning Parameters", 1.05, 1, 2, "Suspension Pre Compression", ""],
         ["$steeringPhyStiffness", "range", "N/m", "Frame Physical Parameters", 600000, 100000, 2000000, "Steering Beam Stiffness", "Stiffness of steering control arms"],
-        ["$steeringPhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 10, 200, "Steering Beam Damping", "Damping of steering control arms"],
+        ["$steeringPhyDamping", "range", "N/m/s", "Frame Physical Parameters", 120, 1, 50, "Steering Beam Damping", "Damping of steering control arms"],
         ["$steeringRailPhyStiffness", "range", "N/m", "Frame Physical Parameters", 600000, 100000, 2000000, "Steering Rail Stiffness", "Stiffness of pinion attachment"],
     ],
 
@@ -72,6 +72,11 @@
         {"group": ["HT07_rocker_fl", "HT07_pushrod_fl"]},
         ["rocker_pushrod_fl",    0.1782,  0.2192,  0.5151],
 
+        {"group": ["HT07_rocker_fl"]},
+        ["rocker_anti_invert_fl",  0.1531,  0.228,   0.5311],
+        {"group": ["HT07_rocker_fr"]},
+        ["rocker_anti_invert_fr", -0.1531,  0.228,   0.5311],
+
         {"group": ["HT07_ohlin_fr", "HT07_rocker_fr"]},
         ["rocker_springtop_fr", -0.1064,  0.1799,  0.5575],
         {"group": ["HT07_rocker_fr", "HT07_pushrod_fr"]},
@@ -93,8 +98,8 @@
         {"group": ["HT07_upright_fr", "HT07_steering_rod_r"]},
         ["hub_steer_joint_fr",  -0.5263, -0.0749,  0.1249],
 
-        {"group": ["HT07_steering_rod_l", "HT07_steering_rod_r"]},
-        ["pinion",               0.0,    -0.1099,  0.1149],
+        // {"group": ["HT07_steering_rod_l", "HT07_steering_rod_r"]},
+        // ["pinion",               0.0,    -0.1099,  0.1149],
         {"group": ""},
     ],
 
@@ -123,6 +128,24 @@
         
         {"beamSpring": "$suspensionPhyStiffnessF", "beamDamp": "$suspensionPhyDampingF"},
 
+        // rocker anti invert
+
+        ["rocker_springtop_fl", "rocker_anti_invert_fl"],
+        ["rocker_pushrod_fl", "rocker_anti_invert_fl"],
+        ["sus_fl_hinge_u", "rocker_anti_invert_fl"],
+        ["sus_fl_hinge_d", "rocker_anti_invert_fl"],
+        ["rocker_pushrod_fr", "rocker_anti_invert_fr"],
+        ["rocker_springtop_fr", "rocker_anti_invert_fr"],
+        ["sus_fr_hinge_u", "rocker_anti_invert_fr"],
+        ["sus_fr_hinge_d", "rocker_anti_invert_fr"],
+
+        // everything else
+
+        ["hub_steer_joint_fl", "hub_steer_joint_fr"],
+
+        ["brake_fl", "hub_steer_joint_fl"],
+        ["brake_fr", "hub_steer_joint_fr"],
+
         ["aarm_fl_hi", "aarm_fl_lo"],
         ["aarm_fr_hi", "aarm_fr_lo"],
         
@@ -137,8 +160,8 @@
         ["sus_fl_hinge_d",   "rocker_pushrod_fl"],
         ["sus_fr_hinge_u",   "rocker_pushrod_fr"],
         ["sus_fr_hinge_d",   "rocker_pushrod_fr"],
-        ["rocker_pushrod_fl",          "aarm_fl_hi"],
         
+        ["rocker_pushrod_fl",          "aarm_fl_hi"],
         ["rocker_pushrod_fr",          "aarm_fr_hi"],
         ["aarm_fr_lo",  "hub_steer_joint_fr"],
         ["aarm_fr_hi",  "hub_steer_joint_fr"],
@@ -160,21 +183,21 @@
         ["aarm_fr_hi",            "brake_fr"],
     ],
 
-    "rails": {
-        "rack":{"links:":["mount_fl_fd", "mount_fr_fd"], "looped":false, "capped":true}
-    },
+    // "rails": {
+    //     "rack":{"links:":["mount_fl_fd", "mount_fr_fd"], "looped":false, "capped":true}
+    // },
 
-    "slidenodes": [
-        ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
-        ["pinion", "rack", true, true, 0, "$steeringRailPhyStiffness", 100000000, "$suspensionPhyStiffnessF"],
-    ],
+    // "slidenodes": [
+    //     ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+    //     ["pinion", "rack", true, true, 0, "$steeringRailPhyStiffness", 100000000, "$suspensionPhyStiffnessF"],
+    // ],
 
     "hydros": [
         ["id1:","id2:"],
         {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
         {"beamSpring":"$steeringPhyStiffness","beamDamp":"$steeringPhyDamping","beamDeform":"FLT_MAX"},
-        ["mount_fl_fd","pinion", {"factor": 0.2,"steeringWheelLock":90,"inRate":3,"outRate":3}],
-        ["mount_fr_fd","pinion", {"factor":-0.2,"steeringWheelLock":90,"inRate":3,"outRate":3}],
+        ["mount_fl_fd","hub_steer_joint_fl", {"steeringWheelLock":90,"inRate":12,"outRate":12, "inLimit": 1.13, "outLimit": 0.87}],
+        ["mount_fr_fd","hub_steer_joint_fr", {"steeringWheelLock":90,"inRate":12,"outRate":12, "inLimit": 0.87, "outLimit": 1.13}],
         {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
     ],
 },

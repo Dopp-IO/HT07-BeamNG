@@ -41,9 +41,9 @@
         "variables": [
             ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
             ["$suspensionPhyStiffnessR", "range", "N/m", "Rear Suspension Physical Parameters", 400000, 100000, 5000000, "Beam Stiffness", "Stiffness of all beams in the rear suspension"],
-            ["$suspensionPhyDampingR", "range", "N/m/s", "Rear Suspension Physical Parameters", 100, 10, 200, "Beam Damping", "Damping of all beams in the rear suspension"],
+            ["$suspensionPhyDampingR", "range", "N/m/s", "Rear Suspension Physical Parameters", 100, 1, 50, "Beam Damping", "Damping of all beams in the rear suspension"],
             ["$aarmPhyStiffnessR", "range", "N/m", "Rear Suspension Physical Parameters", 400000, 100000, 5000000, "A-Arm Beam Stiffness", "Stiffness of A-arm beams in the rear suspension"],
-            ["$aarmPhyDampingR", "range", "N/m/s", "Rear Suspension Physical Parameters", 100, 10, 200, "Beam Damping", "Damping of A-arm beams in the rear suspension"],
+            ["$aarmPhyDampingR", "range", "N/m/s", "Rear Suspension Physical Parameters", 100, 1, 50, "Beam Damping", "Damping of A-arm beams in the rear suspension"],
             ["$amkMassR", "range", "kg", "Rear Suspension Physical Parameters", 1.0, 0.1, 5, "AMK Node Mass", ""],
             ["$suspensionRearDamping", "range", "N/m/s", "Rear Suspension Tuning Parameters", 300, 0.1, 1000, "Suspension Damping", ""],
             ["$suspensionRearSpringRate", "range", "N/m", "Rear Suspension Tuning Parameters", 20000, 1, 50000, "Suspension Spring Rate", ""],
@@ -68,6 +68,11 @@
             ["rocker_springtop_rl",  0.1853,  1.302,   0.4609],
             {"group": ["HT07_rocker_rl", "HT07_pushrod_rl"]},
             ["pushrod_rl",           0.2313,  1.3313,  0.3978],
+
+            {"group": ["HT07_rocker_rl"]},
+            ["rocker_anti_invert_rl",  0.2259,  1.3149,  0.448],
+            {"group": ["HT07_rocker_rr"]},
+            ["rocker_anti_invert_rr", -0.2259,  1.3149,  0.448]
     
             {"group": ["HT07_ohlin_rr", "HT07_rocker_rr"]},
             ["rocker_springtop_rr", -0.1853,  1.302,   0.4609],
@@ -121,6 +126,18 @@
             ["carm_rr_out",          "carm_rr_in"],
 
             {"beamSpring": "$suspensionPhyStiffnessR", "beamDamp": "$suspensionPhyDampingR"},
+
+            // rocker anti invert
+            ["rocker_springtop_rl", "rocker_anti_invert_rl"],
+            ["pushrod_rl", "rocker_anti_invert_rl"],
+            ["sus_rl_hinge_r", "rocker_anti_invert_rl"],
+            ["sus_rl_hinge_f", "rocker_anti_invert_rl"],
+            ["rocker_springtop_rr", "rocker_anti_invert_rr"],
+            ["pushrod_rr", "rocker_anti_invert_rr"],
+            ["sus_rr_hinge_r", "rocker_anti_invert_rr"],
+            ["sus_rr_hinge_f", "rocker_anti_invert_rr"],
+
+            // everything else
 
             ["aarm_rr_lo",         "carm_rr_out"],
             ["sus_rl_hinge_f",          "pushrod_rl"],
